@@ -1,0 +1,35 @@
+/*color text*/
+.navbar-nav > li.active > a:hover, .white-text, li.active > a:not(:hover), .list-group-item > *:hover, .list-group-item > *:focus, .list-item tr:hover .btn-primary.btn-more, .glyphicon-chevron-left, .glyphicon-chevron-right, .table-hover>tbody>tr:hover {
+	color: #ffffff;
+}
+.blue-text, a, .pagination>li>a, .list-group-item:hover .badge, .list-group-item.active .badge, .btn-primary.btn-more, .header-text p {
+	color: #034bb9;
+}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus, .black-text, .dropdown-menu > li > a, .dropdown-menu > li.active > a, .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+	color: #1f1f1f;
+}
+/*background color*/
+.bg-transparent, .navbar-nav .open > a, .navbar-nav .open > a:hover, .navbar-nav .open > a:focus, .btn-primary.btn-more, li.active > a:hover, .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+	background-color: transparent;
+}
+.bg-75, .header-content {
+	background-color: rgba(255,255,255,0.75);
+}
+.bg-50 {
+	background-color: rgba(255,255,255,0.5);
+}
+.bg-white, .list-group-item:hover .badge, .list-group-item.active .badge, .dropdown-menu > li > a, .dropdown-menu > li.active > a{
+	background-color: rgba(255,255,255,1);
+}
+.bg-black, .glyphicon-chevron-left, .glyphicon-chevron-right {
+	background-color: #394149;
+}
+.navbar-nav > li.active, .bg-blue, .table.list-item td.bg-blue, .navbar-nav > li.active:after, .navbar-nav > li.active:before, .btn-primary, .list-item tr:hover .btn-primary.btn-more, .pagination>.active>a, .panel-default>.panel-heading.bg-blue, .list-group-item.active, .list-group-item:hover, .table-hover>tbody>tr:hover/*, .list-group-item.active:hover*/ {
+	background-color: rgba(3, 75, 185, 1);
+}
+.table-bordered tr:nth-child(even) {
+	background-color: rgb(247, 247, 247);
+}
+.bg-grey, .footer-sub, .panel-footer, .panel-default>.panel-heading, .table.list-item td, .table.list-item th, .list-group-item {
+	background-color: #ececec;
+}

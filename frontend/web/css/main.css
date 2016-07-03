@@ -1,0 +1,237 @@
+@import url(image.css);
+@import url(padding.css);
+@import url(margin.css);
+@import url(color.css);
+@import url(responsive.css);
+html {
+	font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
+}
+body {
+	background-image: url(../img/bg-main.jpg);
+	background-attachment: fixed;
+	font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
+}
+/*typography*/
+h1, h2, h3, h4, .header-content:before, .middle-vertical:before, .header-text, .middle-vertical > div {
+	display: inline-block;	
+}
+h1, h2, h3, h4, .bold, .table.profile>tbody>tr>td {
+	font-weight: 700;
+}
+aside .countdown-amount {
+	font-size: 1.714em;
+}
+.table.list-item .countdown-amount  {
+	font-size: 1.33em;
+}
+/*size*/
+.full-width, .img-responsive, nav.general li.active:after, nav.general li.active:before {
+	width:100%;
+}
+.full-height, .middle-vertical, .img-responsive-landscape, #logo, .header-content:before, .middle-vertical:before, caption > .row:before {
+	height:100%;
+}
+.subsection:not(.middle-vertical), .form-control {
+	height: auto;
+}
+.header-content {
+	height: 150px;
+	margin: 0;
+}
+.header-content:before, .middle-vertical:before, .oblique-bottom:after {
+	content: "";
+}
+.logo-team, .header-text, .middle-vertical > div {
+	float: none;
+}
+.header-content:before, .middle-vertical:before, .header-text, .middle-vertical > div, .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+	vertical-align: middle;
+}
+#clock div {
+	min-height:50px;
+}
+.glyphicon-chevron-left, .glyphicon-chevron-right {
+	border-radius: 10px;
+	font-size: 30px;
+}
+/*align*/
+.middle-vertical, .table td, .table th, .countdown-period, .countdown-amount, #go-top {
+	text-align: center;
+}
+.table.list-item tr, .table.list-item td, .table.list-item th {
+	vertical-align: middle;
+}
+/*Tables*/
+.table.profile>tbody>tr>td {
+	text-align: left;
+	text-transform: uppercase;
+	width:50%;
+}
+.table.list-item  {
+	border-collapse: separate;
+    border-spacing: 0 15px;
+}
+/*helper css*/
+.content-box, /*.subsection,*/ .win, .lose, #clock div {
+	background-clip: content-box;
+}
+#go-top {
+    height: 67.5px;
+    width: 67.5px;
+    left: 30px;
+	font-size: 48px;
+}
+/*Borders*/
+aside .panel, .list-group-item, .table.list-item td, .table.list-item th, .table.profile>tbody>tr>td, .navbar-right .dropdown-menu {
+	border: none;
+}
+.table.list-item td:first-child {
+	border-right: 1px solid #ddd;
+}
+.btn-more, .table.list-item td.btn-more{
+	border: 2px solid #034bb9;
+}
+.border-primary, .table.profile>tbody {
+	border: 2px solid #1f1f1f;
+}
+.underline {
+	border-bottom: 4px solid #034bb9;
+}
+.radius-reset, .panel-heading, .panel, .list-group-item:first-child, .btn-more, .form-control, .navbar-right .dropdown-menu {
+	border-radius: 0;
+}
+.btn-lg {
+	border-radius: 25px;
+}
+.overflow-hidden, .text-clip, .wrap-img {
+	overflow: hidden;
+}
+.text-clip {
+	text-overflow: ellipsis;
+}
+.cursor-pointer, *[class*="item-"], .table-hover>tbody>tr:hover, .img-modal, #go-top {
+	cursor: pointer;
+}
+/*position*/
+.content, .img-responsive-landscape, .img-responsive, .slider, #go-top, .relative, .header-text {
+	position: relative;
+}
+.glyphicon-chevron-right {
+	right: 0;
+}
+.navbar-right .dropdown-menu {
+	left:0;
+	box-shadow: none;
+}
+.navbar-nav li.active:after {
+	top: -7px;
+}
+.navbar-nav li.active:before {
+	bottom: -7px;
+}
+/*pseudo elements*/
+.navbar-nav > li.active:after, .navbar-nav > li.active:before {
+	content: " ";
+	height:7px;
+}
+.oblique-bottom:after {
+	width: 0;
+	height: 0;
+	border-top: 0px solid transparent;
+	border-left: 262.5px solid rgba(107, 189, 0, 1);
+	border-bottom: 50px solid transparent;
+	position: absolute;
+	left: 0px;
+	bottom: -50px;
+}
+.nowrap {
+	white-space: nowrap;
+}
+/*Styles for play-off*/
+.rounds {
+	border-collapse: separate;
+	border-spacing: 15px 0;
+}
+.rounds > tbody > tr > td:nth-child(2n), .rounds > thead > tr > th:nth-child(2n) {
+	background-color: #f6f7f7;
+}
+.rounds th, .rounds td:not(.col-xs-3) {
+	padding: 15px 10px;
+}
+.rounds td.col-xs-3 {
+	padding: 0;
+}
+.playoff {
+	margin: auto;
+	width: 100%;
+}
+.playoff td {
+	padding: 10px 0;
+	position: relative;
+	font-size: 16px;
+}
+
+.rounds td:not(:last-child) .playoff tr:nth-child(odd) td:before {
+	content: "";
+	height: 100%;
+	border-top: 1px solid #333; border-right: 1px solid #333;
+	position: absolute;
+	top: 50%;
+}
+.rounds td.third-place + td .playoff td:before {
+	display: none;
+}
+.rounds td:not(:last-child) .playoff tr:nth-child(even) td:after {
+	content: "";
+	height: 100%;
+	border-bottom: 1px solid #333; border-right: 1px solid #333;
+	position: absolute;
+	top: -50%;
+}
+.rounds td:not(:last-child) .playoff tr:nth-child(odd) td:before, .rounds td:not(:last-child) .playoff tr:nth-child(even) td:after {
+	width: 50%;
+	right: -50%;
+}
+.rounds td.third-place .playoff tr:nth-child(odd) td:before, .rounds td.third-place .playoff tr:nth-child(even) td:after{
+	width: 150%;
+	right: -150%;
+}
+.playoff .col-xs-9, .playoff .col-xs-3 {
+	border-top: 1px solid #333;
+	border-bottom: 1px solid #333;
+	min-height: 68px;
+	background-color: rgba(255,255,255,1);
+}
+.playoff .col-xs-9 {
+	border-left: 1px solid #333;
+	text-align: left;
+}
+.playoff .col-xs-9 p {
+	min-height: 22px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.playoff .col-xs-9 p:first-child, .playoff .col-xs-3 p:first-child:not(.date) {
+	/*border-bottom: 1px solid #333;*/
+}
+.playoff .col-xs-9 p:first-child {
+	margin: 5px 0 10px;
+}
+.playoff .col-xs-9 p:last-child {
+	margin: 10px 0 5px;
+}
+.playoff .col-xs-3 {
+	/*border-left: 1px solid #333;*/
+	border-right: 1px solid #333;
+	text-align: center;
+	padding: 0;
+}
+.date {
+	margin: 0;
+	padding: 10px 0;
+}
+.score {
+	margin: 0;
+	padding: 20px 0;
+}

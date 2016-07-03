@@ -1,0 +1,60 @@
+.img-responsive-landscape, .text-clip {/*Images landscape*/
+	display: block;
+}
+.item-event {
+	min-height: 132px;
+	white-space: normal;
+}
+.item-event .wrap-img {
+	max-height: 144px;
+}
+.bg-image-full {
+	clear: both;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+/*Images field background*/
+#logo {
+	background-image: url(../img/logo-telecom.png);
+	height: 30px;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+#team {
+	background-image: url(../img/team.jpg);	
+	height: 570px;
+}
+#ad-telecom{
+	background-image: url(../img/bg-banner.jpg);
+	height: 417px;
+}
+.slider, .text-clip {
+	white-space:nowrap;
+}
+/*slider and carousel*/
+.slider *[class*="item-"] {
+	/*float:none;*/
+}
+*[class^="carousel-"] .img-label {
+	bottom: -15px;
+}
+.slider-control {
+	top: 50%;
+	z-index: 5;
+	opacity: 0.25;
+}
+.slider-control:hover {
+	opacity: 0.75;
+}
+.slider-control , *[class^="carousel-"] .img-label, .glyphicon-chevron-left, .glyphicon-chevron-right, nav.general li.active:after, nav.general li.active:before {
+	position: absolute;
+}
+#sponsors-slider .content-box {
+	padding-left: 2%; padding-right:2%;
+}
+.modal-body {
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+}

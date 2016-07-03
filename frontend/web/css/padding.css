@@ -1,0 +1,40 @@
+.header-section, .glyphicon-chevron-left, .glyphicon-chevron-right, .table:not(.index-page).list-item td:not(.logo), .table.list-item th, .full-padding, .img-label, .img-label strong, .img-label p {
+	padding: 15px;
+}
+/*.subsection.content-box,*/ .logo-team {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+.list-inline>li, .sponsors-slider div.content-box, .subsection:not(.content-box) {
+	padding-left: 15px;	padding-right: 15px;
+}
+.table.profile>tbody>tr>td {
+	padding-left: 15px;
+}
+.subsection.middle-vertical {
+	padding-bottom: 0; padding-top: 0;	
+}
+nav.general, footer.general > section.bg-white {
+	padding-bottom: 7px; padding-top: 7px;
+}
+/*.middle-vertical .content {
+	padding-bottom: 20%; padding-top: 20%;
+}*/
+.underline, .subsection/*:not(.content-box)*/ {
+	padding-bottom: 15px;
+}
+.dropdown-menu>li>a, .table.index-page tr td, .footer-sub, .btn-lg {
+	padding: 10px 15px;
+}
+.form-control {
+	padding: 12px;
+}
+#go-top {
+	padding: 8px;
+}
+.reset-padding, .table.list-item td.logo  {
+	padding: 0;
+}
+*[class*="item-"] {
+	padding-right:0;
+}

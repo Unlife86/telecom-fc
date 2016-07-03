@@ -1,0 +1,109 @@
+@media all and (min-width: 1200px) {
+    .countdown-amount {
+        font-size: 2.714em;
+    }
+}
+@media all and (max-width: 1199px) {
+    .item-event .wrap-img + a {
+        margin-top: 15px;
+        display: inline-block;
+    }
+}
+@media all and (max-width: 1199px) and (min-width: 992px) {
+    .countdown-amount {
+        font-size: 1.714em;
+    }
+    .subsection[class*="col-md-"]:not(:first-child) {
+        padding-left: 0;
+    }
+}
+@media all and (min-width: 992px) {
+    #events-gallery .content {
+        height: 399.406px;
+    }
+}
+@media all and (max-width: 991px)  {
+    .countdown-amount {
+        font-size: 2.714em;
+    }
+    #matches .subsection:first-child {
+        background-color: rgba(255,255,255,0.75);
+    }
+    #events-gallery .content, #matches .subsection:first-child .content {
+        height: auto;
+    }
+    #ad-telecom h2 > p {
+        font-size: 24px;
+    }
+    .middle-vertical .content {
+        padding-bottom: 30%;
+        padding-top: 30%;
+    }
+    .item-team .img-label .h4 {
+        font-size: 14px;
+    }
+    #matches .match, #clock {
+        margin: 30px auto;
+    }
+
+}
+@media all and (min-width: 768px) {
+    #matches .content {
+        height: 434px;
+    }
+    .index-page img {
+        max-height: 63px;
+    }
+    td, th {
+        font-size: 18px;
+    }
+    .table.short td, .table.short th {
+        font-size: 16px;
+    }
+    .header-text p:first-child {
+        font-size: 48px;
+    }
+    .header-text p:last-child {
+        font-size: 30px;
+    }
+}
+@media all and (max-width: 991px) and (min-width: 768px) {
+    #matches .match, #clock {
+        width: 50%;
+    }
+}
+@media all and (max-width: 767px) and (min-width: 640px) {
+    #matches .match, #clock {
+        width: 75%;
+    }
+
+
+}
+@media all and (max-width: 767px) {
+
+
+}
+@media all and (max-width: 767px) and (min-width: 321px) {
+    .header-text p:first-child {
+        font-size: 30px;
+    }
+    .header-text p:last-child {
+        font-size: 24px;
+    }
+    td, th {font-size: 24px;}
+    .table.short td, .table.short th {
+        font-size: 18px;
+    }
+}
+@media all and (max-width: 320px) {
+    .header-text {
+        width: 70%;
+    }
+    td, th {font-size: 16px;}
+    .table.short td, .table.short th {
+        font-size: 14px;
+    }
+    .countdown-amount {
+        font-size: 1.714em;
+    }
+}

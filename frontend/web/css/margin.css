@@ -1,0 +1,51 @@
+.btn-lg {
+	margin-top: 10px; margin-bottom: 10px;
+}
+.h5, .row.gallery, .row.events-feed, .form-control:not(.year) {
+	margin-top: 15px; margin-bottom: 15px;
+}
+.table.profile {
+	margin-top: 24px; margin-bottom: 24px;
+}
+.content > * {
+	margin-top: 30px;
+}
+.middle-vertical p, .table + .footer-sub {
+	margin-top: 0;
+}
+.item-gallery, .months, h1, h2, h3, h4, #ad-telecom {
+	margin-bottom: 15px;
+}
+.table.list-item  {
+	margin-bottom: 0;
+}
+.margin-horizontal, #logo, .glyphicon-chevron-left {
+	margin-left:15px; margin-right: 15px;
+}
+.btn-lg {
+	margin-left:auto; margin-right: auto;
+}
+ul.nav, .row.gallery, .row.events-feed {
+	margin-right: 0;
+}
+.row.gallery, .row.events-feed {
+	margin-left: -15px;
+}
+.col-offset-half {
+	margin-left: 4.166666665%;
+}
+.countdown-period, .countdown-amount, .reset-margin {
+	margin: 0;
+}
+.table.list-item .countdown-amount, .table.list-item  .countdown-period{
+	margin: 1% 10%;
+}
+.table.list-item.index-page {
+	margin-top: 15px;
+}
+.negative-mardin-top {
+	margin-top: -15px;
+}
+.content {
+	margin: /*0 1.428em;*/0 15px;
+}
