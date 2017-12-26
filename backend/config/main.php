@@ -13,35 +13,35 @@ return [
     'language' => 'ru-RU',
     'timeZone' => 'UTC',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'gridview' =>  [
+            'class' => '\kartik\grid\Module'
+        ],
+        'markdown' => [
+		    'class' => 'kartik\markdown\Module',
+            'previewAction' => '/markdown/parse/preview',
+        ]
+    ],
     'components' => [
-        'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
+    ],
+    'container' => [
+        'definitions' => [
+            'dmstr\widgets\Menu' => [
+                'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
+                'items' => [
+                    ['label' => 'Меню сайта', 'options' => ['class' => 'header']],
+                    ['label' => 'Турнирная таблица', 'url' => ['/tournament/index', 'idLeague' => 1, 'tour' => 14, 'season' => 3]],
+                    ['label' => 'Матчи', 'url' => ['/matches/index', 'idLeague' => 1, 'tour' => 14, 'season' => 3]],
+                    ['label' => 'Новости', 'url' => ['/news/index']],
+                    ['label' => 'Медиа', 'url' => ['/media/index']],
+                    ['label' => 'Инструменты', 'icon' => 'share', 'url' => '#', 'items' => [
+                            ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii'],],
+                            ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'],],
+                        ],
+                    ],
+                ]
+            ]
         ],
-        'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
-        ],
-        'currentFootballData' => [
-            'class' => 'common\components\CurrentFootballData',
-        ],
-        'errorHandler' => [
-            'errorAction' => 'site/error',
-        ],
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
-        */
     ],
     'params' => $params,
 ];
