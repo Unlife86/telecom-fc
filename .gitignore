@@ -1,0 +1,12 @@
+composer.lock
+runtime/
+main-local.php
+console/
+/vendor/
+/environments/
+/backend/web/assets/
+/frontend/web/assets/
+/.vscode/
+/.idea/
+/tests/
+!console/migrations/
