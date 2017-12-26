@@ -4,20 +4,9 @@ use yii\grid\GridView;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-$models = $tournament->getModels();
-/*$data_array = [];
-foreach ($models as $model):
-array_push($data_array,ArrayHelper::toArray($model,[
-    'backend\models\Tournament' => [
-        'c_loses',
-    ],
 
-]));
-endforeach;ArrayHelper::multisort($data_array,['c_loses'],[SORT_DESC]);
-print_r($data_array[1]);*/
-//foreach ($models as $model):
-$caption = $models[0]->idGroup->name_group;
-//endforeach;
+$caption = $tournament->totalCount > 0 ? $tournament->getModels()[0]->idGroup->name_group : '';
+
 ?>
 <?= GridView::widget([
             'options' => ['class'=>'reset-margin'],
@@ -27,10 +16,7 @@ $caption = $models[0]->idGroup->name_group;
             'caption' => '<h3 class="text-uppercase">'.$caption.'</h3>',
             'headerRowOptions' => ['class' => 'bg-grey',],
             'columns' => [
-                [
-                    'label' => '#',
-                    'value'=>'positon_in_tour',
-                ],
+                ['class' => 'yii\grid\SerialColumn'],
                 [
                     'label' => 'Команда',
                     'format'=>'html',

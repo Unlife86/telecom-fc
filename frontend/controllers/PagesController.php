@@ -57,88 +57,74 @@ class PagesController extends Controller
             ],
         ];
     }
+    private function params() {
+        $params = Yii::$app->request->queryParams;
+        $league = Yii::$app->currentFootballData->getCurrentLeague(isset($params['idLeague']) ? $params['idLeague'] : null);
+        $season = isset($params['season']) ? $params['season'] : Yii::$app->currentFootballData->getCurrentSeason($league->id);
+        $tour = isset($params['tour']) ? $params['tour'] : Yii::$app->currentFootballData->getCurrentTour($season, $league->id);
+        return [
+            'n_tour' => $tour,
+            'id_season' => $season,
+            'id_league' => $league->id,
+            'name_league' => $league->name,
+            'type_league' => $league->type,
+        ];
+    }
     /*Functions controller*/
     public function getRegionGroup ($league) {
         $groups = TournamentSearch::find()->select('id_group')->where(['id_league' => $league])->groupBy('id_group')->all();
         return $groups;
     }
     /*actions*/
-    public function actionResults($idLeague = null, $tour = null, $season = null) {
-        if ($idLeague == null) {
-            $idLeague = Yii::$app->currentFootballData->getCurrentLeague()->id;
-            $nameLeague = Yii::$app->currentFootballData->getCurrentLeague()->name;
-            $typeLeague = Yii::$app->currentFootballData->getCurrentLeague()->type;
-        } else {
-            $nameLeague = Yii::$app->currentFootballData->getCurrentLeague($idLeague)->name;
-            $typeLeague = Yii::$app->currentFootballData->getCurrentLeague($idLeague)->type;
-        }
-        if ($season == null) {$season = Yii::$app->currentFootballData->getCurrentSeason($idLeague);}
-        //if ($tour == null) {$tour = Yii::$app->currentFootballData->getCurrentTour($season, $idLeague);}
+    public function actionResults() {
+        $params = $this->params();
         $searchModel = new MatchesSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        //$calendarProvider = $searchModel->search(Yii::$app->request->queryParams);
-        if ($tour == null) {
-            $dataProvider->query->where(/*['and',['not',['score_h'=> null]],*/['id_season'=>$season, 'id_league' => $idLeague]/*]*/)->andWhere(['not',['date_match'=> null]])->orderBy(['n_tour' => SORT_ASC, 'date_match' => SORT_ASC]);
-            //$calendarProvider->query->where(['score_h'=> null,'id_season'=>$season, 'id_league' => $idLeague])->orderBy(['n_tour' => SORT_ASC, 'date_match' => SORT_ASC]);
-        } else {
-            $dataProvider->query->where(/*['and',['not',['score_h'=> null]],*/['n_tour'=>$tour,'id_season'=>$season, 'id_league' => $idLeague]/*]*/)->andWhere(['not',['date_match'=> null]])->orderBy(['date_match' => SORT_ASC]);
-            //$calendarProvider->query->where(['score_h'=> null,'n_tour'=>$tour,'id_season'=>$season, 'id_league' => $idLeague])->orderBy(['n_tour' => SORT_ASC, 'date_match' => SORT_ASC]);
-        }
+        $dataProvider = $searchModel->search(['MatchesSearch' => array_slice($params, 0, 3)]);
+        if ($params['type_league'] == 'play-off') {$dataProvider->query->andWhere(['not',['date_match'=> null]]);}
         return $this->render('results', [
-            'providers' => ['played' => $dataProvider/*, 'calendar' => $calendarProvider*/],
+            'providers' => ['played' => $dataProvider],
             'searchModel' => $searchModel,
-            'dropList' => $searchModel->getList($season, $idLeague),
-            'current' => ['tour' => $tour, 'season' => $season, 'id_league' => $idLeague, 'name_league' => $nameLeague, 'type_league' => $typeLeague],
+            'dropList' => $searchModel->getList($params['id_season'], $params['id_league']),
+            'current' => $params,
         ]);
     }
 
-    public function actionTournament($idLeague = null, $tour = null, $season = null) {
+    public function actionTournament() {
         /*Set league`s data*/
-        if ($idLeague == null) {
-            $idLeague = Yii::$app->currentFootballData->getCurrentLeague()->id;
-            $typeLeague = Yii::$app->currentFootballData->getCurrentLeague()->type;
-            $nameLeague = Yii::$app->currentFootballData->getCurrentLeague()->name;
-        } else {
-            $typeLeague = Yii::$app->currentFootballData->getCurrentLeague($idLeague)->type;
-            $nameLeague = Yii::$app->currentFootballData->getCurrentLeague($idLeague)->name;
-        }
-        /* Set current tour and season*/
-        if ($season == null) {$season = Yii::$app->currentFootballData->getCurrentSeason($idLeague);}
-        if ($tour == null) {$tour = Yii::$app->currentFootballData->getCurrentTour($season, $idLeague);}
+        $params = $this->params();
         /*get list of matches in the league => season => tour*/
         $searchMatch = new MatchesSearch();
-        if ($typeLeague == 'play-off') {
-            $rounds = $searchMatch->getTours($season, $idLeague); $tournament = [];
+        if ($params['type_league'] == 'play-off') {
+            $rounds = $searchMatch->getTours(array_slice($params, 1, 2));
+            $tournament = [];
             foreach ($rounds as $round):
-                $matchProvider = $searchMatch->search(Yii::$app->request->queryParams);
-                $matchProvider->query->where(['n_tour' => $round->n_tour, 'id_season'=>$season, 'id_league' => $idLeague]);
+                $matchProvider = $searchMatch->search(['MatchesSearch' => array_merge(array_slice($params, 1, 2), ['n_tour' => $round->n_tour])]);
                 array_push($tournament, $matchProvider);
             endforeach;
             return $this->render('tournament', [
                 'tournament' => $tournament,
-                'current' => ['tour' => $tour, 'season' => $season, 'name_league' => $nameLeague, 'type_league' => $typeLeague, 'id_league' => $idLeague],
+                'current' => $params,
             ]);
         } else {
-            $matchProvider = $searchMatch->search(Yii::$app->request->queryParams);
-            $matchProvider->query->where(['and',['not',['score_h'=> null]],['n_tour'=>$tour,'id_season'=>$season, 'id_league' => $idLeague]])->orderBy(['date_match' => SORT_DESC]);
+            $matchProvider = $searchMatch->search(['MatchesSearch' => array_slice($params, 0, 3)]);
+            //$matchProvider->query->andWhere(['not',['score_h'=> null]]);
         /*get tournament table or play-off depending on the league*/
             $searchTours = new TournamentSearch();
-            if ($typeLeague == 'group') { //if type is group tour
-                $groups = $this->getRegionGroup($idLeague); $tournament = []; // array have dataProvider every group
+            if ($params['type_league'] == 'group') { //if type is group tour
+                $groups = $this->getRegionGroup($params['id_league']); $tournament = []; // array have dataProvider every group
                 foreach ($groups as $group):
-                    $region = $searchTours->search(Yii::$app->request->queryParams);
-                    $region->query->andWhere(['id_league' => $idLeague, 'n_tour'=> $tour, 'id_season'=>$season, 'id_group' => $group->id_group]);
+                    $region = $searchTours->search(['TournamentSearch' => array_merge($params, ['id_group' => $group->id_group])]);
                     array_push($tournament, $region);
                 endforeach;
-            } else if ($typeLeague == 'tournament'){
-                $tournament = $searchTours->search(Yii::$app->request->queryParams); $tournament->query->andWhere(['id_league' => $idLeague, 'n_tour'=> $tour, 'id_season'=>$season]);
+            } else if ($params['type_league'] == 'tournament'){
+                $tournament = $searchTours->search(['TournamentSearch' => $params]);
             }
             /*Render view*/
             return $this->render('tournament', [
                 'matchProvider' => $matchProvider,
                 'tournament' => $tournament,
-                'dropList' => $searchTours->getList($season, $idLeague),
-                'current' => ['tour' => $tour, 'season' => $season, 'name_league' => $nameLeague, 'type_league' => $typeLeague, 'id_league' => $idLeague],
+                'dropList' => $searchTours->getList($params['id_season'], $params['id_league']),
+                'current' => $params,
             ]);
         }
     }
@@ -167,7 +153,7 @@ class PagesController extends Controller
         $model = new ContactForm();
         if ($model -> load(Yii::$app->request->post()) && $model->validate()) {
             if ($model->sendEmail(Yii::$app->params['bossEmail'])) {
-                Yii::$app->session->setFlash('success', 'Сообщение отправленно');
+                Yii::$app->session->setFlash('success', 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
             } else {
                 Yii::$app->session->setFlash('error', 'There was an error sending email.');
             }
