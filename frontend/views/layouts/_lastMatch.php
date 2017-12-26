@@ -18,7 +18,7 @@ use yii\widgets\ListView;
             //$logo = Html::tag('div',$h_logo,['class' => 'col-xs-4 col-xs-push-1']).Html::tag('div',$score,['class' => 'col-xs-4']).Html::tag('div',$g_logo,['class' => 'col-xs-4 col-xs-pull-1']);
             $home = Html::img(Yii::getAlias('@web').'/img/logo/'. $model->idHome->alias_team .'.png',['class'=>'img-responsive']).Html::tag('p', $model->idHome->name_team/*.'<p class="h6 nowrap">('.$model->idHome->city.')</p>'*/, ['class' => 'h5 text-uppercase reset-margin bold nowrap']);
             $guest = Html::img(Yii::getAlias('@web').'/img/logo/'. $model->idGuest->alias_team .'.png',['class'=>'img-responsive']).Html::tag('p', $model->idGuest->name_team/*.'<p class="h6 nowrap">('.$model->idGuest->city.')</p>'*/, ['class' => 'h5 text-uppercase reset-margin bold nowrap']);
-            $label = Html::tag('div',$home,['class' => 'col-xs-5']).Html::tag('div',$score,['class' => 'col-xs-2 reset-padding']).Html::tag('div',$guest,['class' => 'col-xs-5']);
+            $label = Html::tag('div',$home,['class' => 'col-xs-4']).Html::tag('div',$score,['class' => 'col-xs-4 reset-padding']).Html::tag('div',$guest,['class' => 'col-xs-4']);
             return $label;
 
         },
@@ -29,9 +29,8 @@ use yii\widgets\ListView;
             'dataProvider' => Yii::$app->currentFootballData->getNextMatchProvider(),
             'summary'=>'',
             'itemView' => function($model) {
-                $stadium = Html::tag('p', 'Стадион «'.$model->idStadium->name.'»', ['class' => 'text-center']);
-                //$address = Html::tag('p', $model->idStadium->city.', '.$model->idStadium->address, ['class' => 'text-center']);;
-                return $stadium.Html::tag('p','г. '.$model->idStadium->city, ['class' => 'text-center']);//.$address;
+                $stadium = ( !is_null($model->id_stadium) ? Html::tag('p', 'Стадион «'.$model->idStadium->name.'»', ['class' => 'text-center']).Html::tag('p','г. '.$model->idStadium->city, ['class' => 'text-center']) : null);
+                return $stadium;
 
             },
         ]); ?>

@@ -14,8 +14,8 @@ use yii\widgets\ListView;
         'summary'=>'',
         'itemOptions' => ['class'=>'panel-body'],
         'itemView' => function($model) {
-            $home = '<div class="col-xs-6 text-center">'.Html::img(Yii::getAlias('@web').'/img/logo/'. $model->idHome->alias_team .'.png',['class'=>'img-responsive']).'<p class="h5 text-uppercase bold">'.$model->idHome->name_team.'</p></div>';
-            $guest = '<div class="col-xs-6 text-center">'.Html::img(Yii::getAlias('@web').'/img/logo/'. $model->idGuest->alias_team .'.png',['class'=>'img-responsive']).'<p class="h5 text-uppercase bold">'.$model->idGuest->name_team.'</p></div>';
+            $home = '<div class="col-xs-6 text-center reset-padding">'.Html::img(Yii::getAlias('@web').'/img/logo/'. $model->idHome->alias_team .'.png',['class'=>'img-responsive']).'<p class="h5 text-uppercase bold reset-margin">'.$model->idHome->name_team.'</p><p class="h6 reset-margin">('.$model->idHome->city.')</p></div>';
+            $guest = '<div class="col-xs-6 text-center reset-padding">'.Html::img(Yii::getAlias('@web').'/img/logo/'. $model->idGuest->alias_team .'.png',['class'=>'img-responsive']).'<p class="h5 text-uppercase bold reset-margin">'.$model->idGuest->name_team.'</p><p class="h6 reset-margin">('.$model->idGuest->city.')</p></div>';
             return $home.$guest;
 
         },
