@@ -6,52 +6,38 @@ Yii::$app->view->registerJsFile('@web/js/tagcanvas.min.js',['position' => yii\we
 $this->title = 'ФК Телеком';
 $date = Yii::$app->currentFootballData->getNextMatchDate()['date'];
 ?>
-<!--<section class="bg-image-full row  hidden-xs" id="team">
+<!--<section class="bg-image-default row hidden-xs" id="team">
     <h1 class="text-uppercase blue-text bg-75 img-label">один город - одна команда</h1>
 </section>-->
 <!--section matches & tournament-->
+<!--<section class="row">
+    <div class="subsection content-box col-xs-12 bg-white">
+            <div class="col-xs-6 col-sm-2" style="padding: 15px;">
+                <?= Html::img(Yii::getAlias('@web').'/img/vips/fotorazdaev.jpg', ['class'=>'img-responsive']); ?>
+            </div>
+            <div class="col-xs-6 col-sm-10 text-center" style="padding: 15px;">
+                <?= Html::tag('h2', 'Поздравляем с 70-летним юбилеем', ['class' => 'text-uppercase blue-text underline']) ?>
+                <?= Html::tag('p', 'Председателю Правления, '.Html::a( 'Виталию Александровичу Раздаеву', 'https://ru.wikipedia.org/wiki/%D0%A0%D0%B0%D0%B7%D0%B4%D0%B0%D0%B5%D0%B2,_%D0%92%D0%B8%D1%82%D0%B0%D0%BB%D0%B8%D0%B9_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%D0%BE%D0%B2%D0%B8%D1%87', ['class' => 'h4 text-uppercase bold blue-text']).' 70 лет!', ['class' => 'h4 text-uppercase bold balck-text']) ?>
+                <?= Html::tag('p', 'Желаем Вам светлого счастья в жизни и неугасаемого оптимизма, отменной удачи и бравого здоровья.', ['class' => 'h4 text-uppercase bold balck-text']) ?>
+            </div>
+        </div>
+         
+    
+</section>-->
 <section class="row" id="matches">
-    <!--Next match-->
-    <div class="subsection content-box col-xs-12 col-sm-12 col-md-4 bg-white">
-        <?php
-        if ($date == null) {
-            echo $this->render('_lastMatch');
-        } else {
-            echo $this->render('_nextMatch');
-        }
-        ?>
-    </div>
     <!--tournament short table-->
-            <?php
-                if ($league->type == 'play-off') {
-                    echo $this->render('_play-off', ['tours' => $tours, 'tour' => $tour, 'league' => $league]);
-                } else {
-                    echo $this->render('_tours', ['tours' => $tours, 'league' => $league]);
-                }
-            ?>
-        </div>
-        <!--Look full table-->
-        <footer class="footer-sub text-center">
-            <?= Html::a('Посмотреть турнир', Url::to(['/pages/tournament', 'idLeague' => $league->id, 'tour' => $tour, 'season' => $season]), ['class'=>'btn btn-primary btn-lg text-uppercase']);?>
-        </footer>
-    </div>
-    <!--Result matches-->
-    <?php if ($league->type != 'play-off') { ?>
-    <div class="subsection content-box col-xs-12 col-sm-6 col-md-4 bg-white">
-        <div class="content">
-            <h2 class="text-uppercase blue-text underline">матчи в турнире</h2>
-            <?= $this->render('_matches', ['matches' => $matches]) ?>
-        </div>
-        <!--Look all result-->
-        <footer class="footer-sub text-center">
-            <?= Html::a('Все матчи', Url::to(['/pages/results', 'idLeague' => $league->id, 'tour' => $tour, 'season' => $season]), ['class'=>'btn btn-primary btn-lg text-uppercase']);?>
-        </footer>
-    </div>
-    <?php } ?>
+    <?php
+    if (isset($tournament)) {
+        echo $this->render('_tours', ['tours' => $tournament, 'league' => $league, 'params' => $params]);
+        echo $this->render('_matches', ['matches' => $matches, 'tournament' => $tournament, 'league' => $league, 'params' => $params]);
+    } else {
+        echo $this->render('_matches', ['matches' => $matches, 'league' => $league, 'params' => $params, 'headers' => $headers]);
+    }
+    ?>
 </section>
 <!--section about DTV Telecom-->
-<section class="row bg-image-full hidden-xs" id="ad-telecom">
-    <div class="subsection content-box col-sm-5">
+<section class="row bg-image-default hidden-xs clearfix" id="ad-telecom">
+    <div class="subsection col-sm-5">
         <div class="content">
             <div id="myCanvasContainer">
                 <canvas height="317" id="myCanvas">
@@ -72,7 +58,7 @@ $date = Yii::$app->currentFootballData->getNextMatchDate()['date'];
             </div>
         </div>
     </div>
-    <div class="subsection content-box col-sm-4 col-sm-push-3 bg-75 middle-vertical">
+    <div class="subsection col-sm-4 bg-75 middle-vertical">
         <div class="content">
             <h2 class="text-uppercase blue-text text-center"><p>подключайся</p><p>и</p><p>смотри</p></h2>
             <p class="h4 text-center">матчи любимых команд</p>

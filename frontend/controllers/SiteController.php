@@ -5,6 +5,8 @@ use Yii;
 /*use backend\models\Matches;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;*/
+use yii\base\Object;
+use yii\helpers\ArrayHelper;
 use frontend\models\MatchesSearch;
 use frontend\models\TournamentSearch;
 use frontend\models\PlayersSearch;
@@ -80,30 +82,17 @@ class SiteController extends Controller
             $tournament->totalCount=1;
             $array_return = array_merge($array_return,['tournament' => $tournament/*, 'headers' => $headers = ['Матчи в туре', 'Ближайшие матчи']*/]);
         } else {
-            $matches->query->where(['and',['id_league' => $league->id],['or','id_guest=8', 'id_home=8']])->orderBy(['date_match' => SORT_ASC]);
+            $array_return = array_merge($array_return,['headers' => $headers = $league->id/2 == 1 ? [/*'1/8 финала', */'1/4 финала', 'Полуфинал', 'Полуфинал: Ответные матчи', 'Финал'] : ['Полуфинал', '3 место', 'Финал']]);
         }
-
-        if ($league->type == 'play-off') {
-            $tours = $searchMatches->search(Yii::$app->request->queryParams);
-            $tours->query->where(['id_league' => $league->id, 'n_tour'=> $tour, 'id_season'=>$season])->andWhere(['not',['date_match'=> null]])->orderBy(['date_match' => SORT_ASC]);
-            //$tours = $searchMatches->getTeams($league->id, $season, $tour);
-        } else {
-            $searchTours = new TournamentSearch();$tours = $searchTours->search(Yii::$app->request->queryParams);
-            $tours->query->andWhere(['id_league' => $league->id, 'n_tour'=> $tour, 'id_season'=>$season])/*->andWhere(['id_group' => 1])*/;/*$tours->pagination->pageSize=4;*/ $tours->totalCount=1;
-        }
-
         $searchTeam = new PlayersSearch(); $team = $searchTeam->search(Yii::$app->request->queryParams);
         $searchEvents = new NewsSearch(); $events = $searchEvents->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'matches' => $matches,
-            'tours' => $tours,
+        $array_return = array_merge($array_return,[
             'team' => $team,
             'events' => $events,
-            'league' => $league,
-            'tour' => $tour,
-            'season' => $season
+            'pictures' => Yii::$app->media->find('/img/gallery/'),
+            'params' => array_merge($params,['n_tour' => $n_tour]),
         ]);
+        return $this->render('index', $array_return);
     }
 
 }
