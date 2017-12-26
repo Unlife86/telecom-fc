@@ -1,13 +1,10 @@
 <?php
-use yii\helpers\FileHelper;
+
 use yii\helpers\Html;
-$dir = Yii::getAlias('@webroot');
-$pictures = FileHelper::findFiles($dir.'/img/gallery/');
+use common\modules\media\helpers\FileHelper;
 ?>
 <div class="row gallery" id="gallery">
-    <?php foreach ($pictures as $picture): ?>
-        <div class="col-xs-4 col-sm-4 col-md-3 item-gallery wrap-img">
-           <?= Html::img(Yii::$app->currentFootballData->getFilesFolder('/img/gallery/', $picture),['class'=>'img-responsive']);?>
-        </div>
-    <?php endforeach; ?>
+    <?php foreach ($pictures as $picture):
+        echo Html::tag('div', Html::img($picture,['class'=>'img-responsive']),['class' => 'col-xs-4 col-sm-4 col-md-3 item-gallery wrap-img']);
+     endforeach; ?>
 </div>

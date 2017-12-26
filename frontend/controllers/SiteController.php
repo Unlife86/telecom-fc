@@ -2,10 +2,6 @@
 namespace frontend\controllers;
 
 use Yii;
-/*use backend\models\Matches;
-use yii\base\InvalidParamException;
-use yii\web\BadRequestHttpException;*/
-use yii\base\Object;
 use yii\helpers\ArrayHelper;
 use frontend\models\MatchesSearch;
 use frontend\models\TournamentSearch;

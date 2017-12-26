@@ -18,18 +18,15 @@ return [
         'currentFootballData' => [
             'class' => 'common\components\CurrentFootballData',
         ],
+        'media' => [
+            'class' => 'common\components\Media',
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
-        ],
-    ],
-    'modules' => [
-        'media' => [
-            'class' => 'common\modules\media\MediaModule',
-            'layoutPath' => '@app/views/layout',
         ],
     ],
 ];

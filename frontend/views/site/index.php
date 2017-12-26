@@ -93,7 +93,11 @@ $date = Yii::$app->currentFootballData->getNextMatchDate()['date'];
     <div class="subsection content-box col-md-6 bg-white">
         <div class="content">
             <h2 class="text-uppercase blue-text underline">Галлерея</h2>
-            <?= $this->render('_gallery') ?>
+            <div class="row gallery" id="gallery">
+                <?php foreach ($pictures as $picture):
+                    echo Html::tag('div', Html::img($picture, ['class'=>'img-responsive']),['class' => 'col-xs-4 col-sm-4 col-md-3 item-gallery wrap-img']);
+                endforeach; ?>
+            </div>
         </div>
         <footer class="footer-sub text-right">
             <?= Html::a('Все фотографии', Url::to(['/pages/gallery',]), ['class'=>'btn btn-primary btn-lg text-uppercase']);?>
