@@ -2,34 +2,33 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\TypePublishSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Type Publishes';
+$this->title = 'Статусы публикаций';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="type-publish-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?= $this->render('_form', [
+        'model' => $searchModel,
+    ]) ?>
 
-    <p>
-        <?= Html::a('Create Type Publish', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <?php Pjax::begin(['id' => 'type-publish']) ?>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                
+                'id',
+                'type',
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'type',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                ['class' => 'yii\grid\ActionColumn'],
+            ],
+        ]); ?>
+    <?php Pjax::end() ?>
 
 </div>

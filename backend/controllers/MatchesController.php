@@ -4,20 +4,32 @@ namespace backend\controllers;
 
 use common\models\Seasons;
 use Yii;
-use common\models\Matches;
+use yii\base\Model;
 use backend\models\MatchesSearch;
+use common\models\Matches;
+use yii\helpers\Json;
+use yii\web\Response;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\widgets\ActiveForm;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
-/**
- * MatchesController implements the CRUD actions for Matches model.
- */
 class MatchesController extends Controller
 {
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -27,60 +39,44 @@ class MatchesController extends Controller
         ];
     }
 
-    /**
-     * Lists all Matches models.
-     * @return mixed
-     */
     public function actionIndex()
     {
-        $searchModel = new MatchesSearch();/*Yii::$app->request->setQueryParams(['MatchesSearch' => ['id_league' => 2]])*/;
+        $searchModel = new MatchesSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        if (Yii::$app->request->post('hasEditable')) {
+            $model = $this->findModel(Yii::$app->request->post('editableKey'));
+            $searchModel->setOutput($editableColumns = current(Yii::$app->request->post('MatchesSearch')));            
+            if ($model->load($editableColumns, '') && $model->save()) {                
+                return Json::encode(['output' => $searchModel->output, 'message' => '']);
+            }
+        }
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'title' => ': Матчи',
+            'columns' => $searchModel->columns(),
+            'toolbarContent' => $searchModel->toolbarContent()
         ]);
     }
-
-    /**
-     * Displays a single Matches model.
-     * @param integer $id
-     * @return mixed
-     */
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id), //'season' => $this->findModel($id)->getIdSeason(),
+            'model' => $this->findModel($id),
         ]);
     }
-
-    /**
-     * Creates a new Matches model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
     public function actionCreate()
     {
-        $model = new Matches();
-
+        $model = new MatchesSearch();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
-            /*return $this->render('create', [
-                'model' => $model,
-            ]);*/
-            return $this->redirect(['index']);
-        } else {
-            return $this->renderAjax('create', [
-                'model' => $model,
-            ]);
+            $model = new MatchesSearch();
         }
+        $model->load(Yii::$app->request->queryParams);
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
-
-    /**
-     * Updates an existing Matches model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -93,13 +89,6 @@ class MatchesController extends Controller
             ]);
         }
     }
-
-    /**
-     * Deletes an existing Matches model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
@@ -107,13 +96,6 @@ class MatchesController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Matches model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Matches the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Matches::findOne($id)) !== null) {

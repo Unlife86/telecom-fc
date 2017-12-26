@@ -3,11 +3,13 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\League;
+use common\models\League;
 use backend\models\LeagueSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+use yii\helpers\Json;
 
 /**
  * LeagueController implements the CRUD actions for League model.
@@ -17,6 +19,16 @@ class LeagueController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -34,6 +46,15 @@ class LeagueController extends Controller
     {
         $searchModel = new LeagueSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        if (Yii::$app->request->post('hasEditable')) {
+            $model = $this->findModel(Yii::$app->request->post('editableKey'));
+            if ($model->load(['League' => current(Yii::$app->request->post('League'))])) {
+                $model->save();
+                echo Json::encode(['output'=>'', 'message'=>'']);
+                return;
+            }
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,

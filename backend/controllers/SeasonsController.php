@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Seasons;
+use common\models\Seasons;
 use backend\models\SeasonsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

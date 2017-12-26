@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\TypePlayers;
+use common\models\TypePlayers;
 use backend\models\TypePlayersSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

@@ -7,14 +7,9 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\FootballTeam;
 
-/**
- * FootballTeamSearch represents the model behind the search form about `backend\models\FootballTeam`.
- */
 class FootballTeamSearch extends FootballTeam
 {
-    /**
-     * @inheritdoc
-     */
+
     public function rules()
     {
         return [
@@ -23,26 +18,15 @@ class FootballTeamSearch extends FootballTeam
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function scenarios()
     {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
-    /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
-     */
     public function search($params)
     {
         $query = FootballTeam::find();
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -50,8 +34,6 @@ class FootballTeamSearch extends FootballTeam
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
@@ -66,4 +48,11 @@ class FootballTeamSearch extends FootballTeam
 
         return $dataProvider;
     }
+
+    public function afterFind() 
+    {
+        parent::afterFind();
+        $this->name_team = $this->name_team .' ( '. $this->city.')';
+    }
+
 }

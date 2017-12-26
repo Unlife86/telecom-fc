@@ -3,11 +3,12 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\FootballTeam;
+use common\models\FootballTeam;
 use backend\models\FootballTeamSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * FootballTeamController implements the CRUD actions for FootballTeam model.
@@ -17,6 +18,16 @@ class FootballTeamController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -61,7 +72,8 @@ class FootballTeamController extends Controller
     public function actionCreate()
     {
         $model = new FootballTeam();
-
+        /*$model->file = UploadedFile::getInstance($model, 'file');
+        $model->file->saveAs();*/
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id_team]);
         } else {

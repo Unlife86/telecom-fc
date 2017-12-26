@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Stadiums;
+use common\models\Stadiums;
 use backend\models\StadiumsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

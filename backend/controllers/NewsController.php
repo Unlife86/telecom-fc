@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\News;
+use common\models\News;
 use backend\models\NewsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

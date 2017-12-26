@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\TypePublish;
+use common\models\TypePublish;
 use backend\models\TypePublishSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -34,6 +34,10 @@ class TypePublishController extends Controller
     {
         $searchModel = new TypePublishSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        if ($searchModel->load(Yii::$app->request->post()) && $searchModel->save()) {
+            $searchModel = new TypePublishSearch();
+        } 
 
         return $this->render('index', [
             'searchModel' => $searchModel,
