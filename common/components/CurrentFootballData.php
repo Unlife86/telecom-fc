@@ -5,7 +5,7 @@ use Yii;
 use yii\base\Component;
 use common\models\Seasons;
 use common\models\Matches;
-use backend\models\MatchesSearch;
+use frontend\models\MatchesSearch;
 use common\models\Tournament;
 use common\models\League;
 
@@ -32,57 +32,50 @@ class CurrentFootballData extends Component
     /*Function get all data of league (id, name, type)*/
     public function getListLeague()
     {
-        $league = League::find()->select(['id', 'name', 'current'])->all();
-        return $league;
+        return $league = League::find()->select(['id', 'name', 'current'])->all();
     }
-    public function getCurrentLeague($id = null)
-    {
-        if  ($id == null) {
-            $league = League::find()->select(['id', 'name', 'type'])->where(['current' => 1])->one();
-        } else {
-            $league = League::findOne($id);
-        }
-        return $league;
-    }
-        /*Function get all played matches of league in current tour */
+    /* Function get all played matches of league in current tour */
     public function getCountMatches() {
-        $count = Matches::find()->andWhere(['n_tour' => $this->getCurrentTour(), 'id_league' => $this->getCurrentLeague()->id])->andWhere(['not',['score_h'=> null]])->count();
-        return $count;
+        return $count = Matches::find()->andWhere(['n_tour' => $this->getCurrentTour(), 'id_league' => $this->getCurrentLeague()->id])->andWhere(['not',['score_h'=> null]])->count();
     }
-    /*Function get last season in league*/
-    public function getCurrentSeason($league = null) {
-        if ($league == null) {$league = $this->getCurrentLeague()->id;}
-        if ($this->getCurrentLeague($league)->type == 'play-off' ) {
-            $season = Matches::find()->select('id_season')->where(['id_league' => $league])->max('id_season');
-        } else {
-            $season = Tournament::find()->select('id_season')->where(['id_league' => $league])->max('id_season');
-        }
-
-        return $season;
-    }
-    /*Function get year season on its id*/
+    /* Function get year season on its id */
     public function getYearSeason($id) {
         $year = Seasons::findOne($id);
         return $year->year;
     }
-    /*Function get last tour of league in season*/
+
+    /* Functions current data:  league_id, season_id, n_tour */
+    public function getCurrentLeague($id = null)
+    {
+        return $league = ($id == null ? League::find()->select(['id', 'name', 'type'])->where(['current' => 1])->one() : League::findOne($id));
+    }
+    public function getCurrentSeason($league = null) {
+        $league = ($league == null ? $this->getCurrentLeague()->id : $league);
+        $season = Matches::find()->select('id_season')->where(['id_league' => $league])->max('id_season');
+        return $season = ($season == null ? Tournament::find()->select('id_season')->where(['id_league' => $league])->max('id_season') : $season);
+    }
+    /* Function get last tour of league in season */
     public function getCurrentTour($season = null, $league = null)
     {
-        if ($season == null) {$season = $this->getCurrentSeason();}
-        if ($league == null) {$league = $this->getCurrentLeague()->id;}
-        $type = $this->getCurrentLeague($league)->type;
-        if ($type == 'play-off' ) {
-            $tour = Matches::find()->select('n_tour')->andWhere(['id_season' => $season, 'id_league' => $league, 'score_h' => null])->andWhere(['not',['date_match'=> null]])->min('n_tour');
-            if ($tour == null) { $tour = Matches::find()->select('n_tour')->andWhere(['id_season' => $season, 'id_league' => $league])->max('n_tour'); }
-        } else {
-            $tour = Tournament::find()->select('n_tour')->andWhere(['id_season' => $season, 'id_league' => $league])->max('n_tour');
-        }
+        $league = $league == null ? $league = $this->getCurrentLeague()->id : $league;
+        $season = $season == null ? $season = $this->getCurrentSeason($league) : $season;
+        /* @var tour is minimum tours is taken from the matches where date is the current date */
+        $tour = Matches::find()->select('n_tour')->andWhere(['id_season' => $season, 'id_league' => $league, 'score_h' => null, 'postponed' => 0])->andWhere(['DATE(date_match)' => date('Y-m-d', strtotime('+7 hours'))])->min('n_tour');
+        /* if that matches is not found, @var tour is maximum tours all matches where date less than the current date */
+        $tour = $tour == null ? $tour = Matches::find()->select('n_tour')->andWhere(['id_season' => $season, 'id_league' => $league])->andWhere(['not',['date_match'=> null]])->andWhere(['<','DATE(date_match)', date('Y-m-d', strtotime('+7 hours'))])->max('n_tour') : $tour;
+        $tour = ($tour == null ? 1 : $tour);
         return $tour;
     }
-    /*Next match widget*/
+
+    /* Next match widget */
     public function getNextMatchDate()
     {
-        $match = Matches::find()->select(['id', 'date_match'])->where(['score_h' => null, 'id_season' => $this->getCurrentSeason(), 'id_league' => $this->getCurrentLeague()->id])->andWhere(['or','id_guest=8', 'id_home=8'])->orderBy(['date_match' => SORT_ASC])->one();
+        $match = Matches::find()
+            ->select(['id', 'date_match'])
+            ->where(['score_h' => null, 'id_season' => $this->getCurrentSeason(), 'id_league' => $this->getCurrentLeague()->id])
+            ->andWhere(['not',['date_match' => null]])
+            ->andWhere(['or','id_guest=8', 'id_home=8'])
+            ->orderBy(['date_match' => SORT_ASC])->one();
         if ($match == null) {
             $match = Matches::find()->select(['id'])->where(['id_season' => $this->getCurrentSeason(), 'id_league' => $this->getCurrentLeague()->id])->andWhere(['or','id_guest=8', 'id_home=8'])->max('id');
             return ['date' => null, 'id' => $match];
@@ -93,14 +86,10 @@ class CurrentFootballData extends Component
             return ['date' => $date, 'id' => $match->id];
         }
     }
-
     public function getNextMatchProvider()
     {
-        $searchMatches = new MatchesSearch(['id' => $this->getNextMatchDate()['id']]);
-        $nextMatch = $searchMatches->search(Yii::$app->request->queryParams);
-        /*$nextMatch->query->where(['and',['score_h' => null, 'n_tour' => $this->getCurrentTour()],['or','id_guest=8', 'id_home=8']])->orderBy(['date_match' => SORT_ASC])->one();
-        $nextMatch->pagination->pageSize = 1;
-        $nextMatch->totalCount = 1;*/
+        $searchMatches = new MatchesSearch();
+        $nextMatch = $searchMatches->search(['MatchesSearch' => ['id' => $this->getNextMatchDate()['id']]]);
         return $nextMatch;
     }
     /* --------------------------------- */
