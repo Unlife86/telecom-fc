@@ -7,15 +7,12 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
-/**
- * Site controller
- */
 class SiteController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
+
     public function behaviors()
     {
         return [
@@ -23,11 +20,22 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['error'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['login', 'signup'],
+                        'allow' => true,
+                        'ips' => ['127.0.0.1', '10.2.2.10', '10.2.2.3', '176.96.65.110'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'ips' => ['127.0.0.1', '10.2.2.10', '176.96.65.110'],
+                    ],
+                    [
+                        'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -42,9 +50,6 @@ class SiteController extends Controller
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
     public function actions()
     {
         return [
@@ -75,10 +80,34 @@ class SiteController extends Controller
         }
     }
 
+    public function actionSignup()
+    {
+        if (!\Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }        
+
+        $model = new SignupForm();
+
+        if (array_key_exists($model->formName(), $params = Yii::$app->request->post())) {
+            if (Yii::$app->request->isAjax && $model->load($params)) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
+            }
+
+            if ($model->signup($params)) {
+                return $this->actionLogin();
+            }
+        } else {
+            return $this->render('signup', [
+                'model' => $model,
+            ]);
+        }
+    }
+
     public function actionLogout()
     {
         Yii::$app->user->logout();
 
-        return $this->goHome();
+        return $this->actionLogin();
     }
 }
