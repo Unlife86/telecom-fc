@@ -57,17 +57,28 @@ class SiteController extends Controller
             ],
         ];
     }
-    public $layout = 'base';
+    
     public function actionIndex()
     {
-        $season = Yii::$app->currentFootballData->getCurrentSeason();
-        $tour = Yii::$app->currentFootballData->getCurrentTour();
-        $league = Yii::$app->currentFootballData->getCurrentLeague();
-
-        $searchMatches = new MatchesSearch(['id_season' => $season]);
-        $matches = $searchMatches->search(Yii::$app->request->queryParams);$matches->pagination->pageSize=3; $matches->totalCount=3;
-        if ($league->id == 4) {
-            $matches->query->where(['and',['>=','id_league', 3],['or','id_guest=8', 'id_home=8']])->orderBy(['date_match' => SORT_ASC]);
+        $array_return = ['league' => $league = Yii::$app->currentFootballData->getCurrentLeague()];
+        $params = [
+            'id_season' => $season = Yii::$app->currentFootballData->getCurrentSeason($league->id),
+            'id_league' => $league->id,
+        ];
+        $n_tour = Yii::$app->currentFootballData->getCurrentTour($season, $league->id);
+        $searchMatches = new MatchesSearch();
+        $rounds = $searchMatches->getTours(['MatchesSearch' => $params]);
+        $matches = []; $matchesProvider = $searchMatches->search(['MatchesSearch' => array_merge($params,['n_tour' => null, 'date_match' => null])]);
+        $matches_models = ArrayHelper::index($matchesProvider->models, null, 'n_tour');
+        foreach ($rounds as $round):
+            if (isset($matches_models[$round->n_tour])) {$matchesProvider->setModels($matches_models[$round->n_tour]);
+            array_push($matches, clone $matchesProvider);}
+        endforeach;
+        $array_return = array_merge($array_return,['matches' => $matches]);
+        if ($league->type != 'play-off') {
+            $searchTournament = new TournamentSearch(); $tournament = $searchTournament->search(['TournamentSearch' => array_merge($params, ($league->type == 'group') ? ['n_tour' => $n_tour, 'id_group' => 1] : ['n_tour' => $n_tour])]);
+            $tournament->totalCount=1;
+            $array_return = array_merge($array_return,['tournament' => $tournament/*, 'headers' => $headers = ['Матчи в туре', 'Ближайшие матчи']*/]);
         } else {
             $matches->query->where(['and',['id_league' => $league->id],['or','id_guest=8', 'id_home=8']])->orderBy(['date_match' => SORT_ASC]);
         }
