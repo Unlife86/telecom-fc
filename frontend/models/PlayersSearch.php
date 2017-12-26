@@ -42,7 +42,7 @@ class PlayersSearch extends Players
      */
     public function search($params)
     {
-        $query = Players::find();
+        $query = Players::find()->joinWith('type');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
