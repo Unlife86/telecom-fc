@@ -21,10 +21,13 @@
 .bg-white, .list-group-item:hover .badge, .list-group-item.active .badge, .dropdown-menu > li > a, .dropdown-menu > li.active > a{
 	background-color: rgba(255,255,255,1);
 }
+.rounds > tbody > tr > td:nth-child(2n), .rounds > thead > tr > th:nth-child(2n) {
+	background-color: #f6f7f7;
+}
 .bg-black, .glyphicon-chevron-left, .glyphicon-chevron-right {
 	background-color: #394149;
 }
-.navbar-nav > li.active, .bg-blue, .table.list-item td.bg-blue, .navbar-nav > li.active:after, .navbar-nav > li.active:before, .btn-primary, .list-item tr:hover .btn-primary.btn-more, .pagination>.active>a, .panel-default>.panel-heading.bg-blue, .list-group-item.active, .list-group-item:hover, .table-hover>tbody>tr:hover/*, .list-group-item.active:hover*/ {
+.btn-primary:focus, .btn-primary.focus, .pager li > a, .pager li > span, .navbar-nav > li.active, .bg-blue, .table.list-item td.bg-blue, .navbar-nav > li.active:after, .navbar-nav > li.active:before, .btn-primary, .list-item tr:hover .btn-primary.btn-more, .pagination>.active>a, .panel-default>.panel-heading.bg-blue, .list-group-item.active, .list-group-item:hover, .table-hover>tbody>tr:hover/*, .list-group-item.active:hover*/ {
 	background-color: rgba(3, 75, 185, 1);
 }
 .table-bordered tr:nth-child(even) {

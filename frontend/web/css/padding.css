@@ -1,7 +1,7 @@
 .header-section, .glyphicon-chevron-left, .glyphicon-chevron-right, .table:not(.index-page).list-item td:not(.logo), .table.list-item th, .full-padding, .img-label, .img-label strong, .img-label p {
 	padding: 15px;
 }
-/*.subsection.content-box,*/ .logo-team {
+.logo-team {
 	padding-top: 15px;
 	padding-bottom: 15px;
 }
@@ -17,13 +17,10 @@
 nav.general, footer.general > section.bg-white {
 	padding-bottom: 7px; padding-top: 7px;
 }
-/*.middle-vertical .content {
-	padding-bottom: 20%; padding-top: 20%;
-}*/
 .underline, .subsection/*:not(.content-box)*/ {
 	padding-bottom: 15px;
 }
-.dropdown-menu>li>a, .table.index-page tr td, .footer-sub, .btn-lg {
+.dropdown-menu>li>a, .table.index-page tr td, .footer-sub, .btn-lg, .pager li > a, .pager li > span {
 	padding: 10px 15px;
 }
 .form-control {
@@ -32,9 +29,18 @@ nav.general, footer.general > section.bg-white {
 #go-top {
 	padding: 8px;
 }
-.reset-padding, .table.list-item td.logo  {
+.reset-padding, .rounds td.col-xs-3 {
 	padding: 0;
 }
-*[class*="item-"] {
+*[class*="item-"],  .table.list-item td.logo {
 	padding-right:0;
+}
+.table.list-item td.logo {
+	padding-left: 0;
+}
+.rounds th, .rounds td:not(.col-xs-3) {
+	padding: 15px 10px;
+}
+.playoff td {
+	padding: 10px 0;
 }

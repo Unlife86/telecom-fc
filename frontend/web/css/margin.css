@@ -1,4 +1,4 @@
-.btn-lg {
+.btn-lg, .pager li > a, .pager li > span {
 	margin-top: 10px; margin-bottom: 10px;
 }
 .h5, .row.gallery, .row.events-feed, .form-control:not(.year) {
@@ -22,7 +22,7 @@
 .margin-horizontal, #logo, .glyphicon-chevron-left {
 	margin-left:15px; margin-right: 15px;
 }
-.btn-lg {
+.btn-lg, .pager li > a, .pager li > span, .img-25 {
 	margin-left:auto; margin-right: auto;
 }
 ul.nav, .row.gallery, .row.events-feed {
@@ -40,9 +40,9 @@ ul.nav, .row.gallery, .row.events-feed {
 .table.list-item .countdown-amount, .table.list-item  .countdown-period{
 	margin: 1% 10%;
 }
-.table.list-item.index-page {
+/*.table.list-item.index-page {
 	margin-top: 15px;
-}
+}*/
 .negative-mardin-top {
 	margin-top: -15px;
 }

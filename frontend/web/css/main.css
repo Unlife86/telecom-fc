@@ -12,11 +12,17 @@ body {
 	font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
 }
 /*typography*/
-h1, h2, h3, h4, .header-content:before, .middle-vertical:before, .header-text, .middle-vertical > div {
+h1, h2, h3, h4, .header-content:before, .middle-vertical:before, .header-text, .middle-vertical > div, .inline-block {
 	display: inline-block;	
 }
 h1, h2, h3, h4, .bold, .table.profile>tbody>tr>td {
 	font-weight: 700;
+}
+a:focus, .btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn.focus:active, .btn.active.focus {
+	outline: none;
+}
+.btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn.focus:active, .btn.active.focus {
+	border: none;
 }
 aside .countdown-amount {
 	font-size: 1.714em;
@@ -25,26 +31,28 @@ aside .countdown-amount {
 	font-size: 1.33em;
 }
 /*size*/
-.full-width, .img-responsive, nav.general li.active:after, nav.general li.active:before {
+.playoff, .full-width, nav.general li.active:after, nav.general li.active:before {
 	width:100%;
 }
-.full-height, .middle-vertical, .img-responsive-landscape, #logo, .header-content:before, .middle-vertical:before, caption > .row:before {
+.playoff td:before, .playoff td:after, .full-height, .middle-vertical, .img-responsive-landscape, #logo, .header-content:before, .middle-vertical:before, caption > .row:before {
 	height:100%;
+}
+.img-25 {
+	width: 25%;
 }
 .subsection:not(.middle-vertical), .form-control {
 	height: auto;
 }
 .header-content {
 	height: 150px;
-	margin: 0;
 }
-.header-content:before, .middle-vertical:before, .oblique-bottom:after {
+.playoff td:after, .navbar-nav > li.active:after, .navbar-nav > li.active:before, .playoff td:before, .header-content:before, .middle-vertical:before, .oblique-bottom:after {
 	content: "";
 }
 .logo-team, .header-text, .middle-vertical > div {
 	float: none;
 }
-.header-content:before, .middle-vertical:before, .header-text, .middle-vertical > div, .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+.table.list-item tr, .table.list-item td, .table.list-item th, .header-content:before, .middle-vertical:before, .header-text, .middle-vertical > div, .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
 	vertical-align: middle;
 }
 #clock div {
@@ -58,21 +66,14 @@ aside .countdown-amount {
 .middle-vertical, .table td, .table th, .countdown-period, .countdown-amount, #go-top {
 	text-align: center;
 }
-.table.list-item tr, .table.list-item td, .table.list-item th {
-	vertical-align: middle;
-}
 /*Tables*/
 .table.profile>tbody>tr>td {
 	text-align: left;
 	text-transform: uppercase;
 	width:50%;
 }
-.table.list-item  {
-	border-collapse: separate;
-    border-spacing: 0 15px;
-}
 /*helper css*/
-.content-box, /*.subsection,*/ .win, .lose, #clock div {
+.content-box, #clock div {
 	background-clip: content-box;
 }
 #go-top {
@@ -84,9 +85,6 @@ aside .countdown-amount {
 /*Borders*/
 aside .panel, .list-group-item, .table.list-item td, .table.list-item th, .table.profile>tbody>tr>td, .navbar-right .dropdown-menu {
 	border: none;
-}
-.table.list-item td:first-child {
-	border-right: 1px solid #ddd;
 }
 .btn-more, .table.list-item td.btn-more{
 	border: 2px solid #034bb9;
@@ -100,21 +98,24 @@ aside .panel, .list-group-item, .table.list-item td, .table.list-item th, .table
 .radius-reset, .panel-heading, .panel, .list-group-item:first-child, .btn-more, .form-control, .navbar-right .dropdown-menu {
 	border-radius: 0;
 }
-.btn-lg {
+.btn-lg, .pager li > a, .pager li > span {
 	border-radius: 25px;
 }
-.overflow-hidden, .text-clip, .wrap-img {
+.playoff .col-xs-9 p, .text-nowrap, .overflow-hidden, .text-clip, .wrap-img {
 	overflow: hidden;
 }
-.text-clip {
+.playoff .col-xs-9 p, .text-nowrap, .text-clip {
 	text-overflow: ellipsis;
 }
 .cursor-pointer, *[class*="item-"], .table-hover>tbody>tr:hover, .img-modal, #go-top {
 	cursor: pointer;
 }
 /*position*/
-.content, .img-responsive-landscape, .img-responsive, .slider, #go-top, .relative, .header-text {
+.playoff td, .content, .img-responsive-landscape, .img-responsive, .slider, #go-top, .relative, .header-text, #ad-telecom {
 	position: relative;
+}
+#ad-telecom .middle-vertical, .oblique-bottom:after, .rounds td:not(:last-child) .playoff tr:nth-child(even) td:after, .rounds td:not(:last-child) .playoff tr:nth-child(odd) td:before {
+	position: absolute;
 }
 .glyphicon-chevron-right {
 	right: 0;
@@ -131,7 +132,6 @@ aside .panel, .list-group-item, .table.list-item td, .table.list-item th, .table
 }
 /*pseudo elements*/
 .navbar-nav > li.active:after, .navbar-nav > li.active:before {
-	content: " ";
 	height:7px;
 }
 .oblique-bottom:after {
@@ -140,7 +140,6 @@ aside .panel, .list-group-item, .table.list-item td, .table.list-item th, .table
 	border-top: 0px solid transparent;
 	border-left: 262.5px solid rgba(107, 189, 0, 1);
 	border-bottom: 50px solid transparent;
-	position: absolute;
 	left: 0px;
 	bottom: -50px;
 }
@@ -152,40 +151,19 @@ aside .panel, .list-group-item, .table.list-item td, .table.list-item th, .table
 	border-collapse: separate;
 	border-spacing: 15px 0;
 }
-.rounds > tbody > tr > td:nth-child(2n), .rounds > thead > tr > th:nth-child(2n) {
-	background-color: #f6f7f7;
-}
-.rounds th, .rounds td:not(.col-xs-3) {
-	padding: 15px 10px;
-}
-.rounds td.col-xs-3 {
-	padding: 0;
-}
-.playoff {
-	margin: auto;
-	width: 100%;
-}
 .playoff td {
-	padding: 10px 0;
-	position: relative;
 	font-size: 16px;
 }
 
 .rounds td:not(:last-child) .playoff tr:nth-child(odd) td:before {
-	content: "";
-	height: 100%;
 	border-top: 1px solid #333; border-right: 1px solid #333;
-	position: absolute;
 	top: 50%;
 }
 .rounds td.third-place + td .playoff td:before {
 	display: none;
 }
 .rounds td:not(:last-child) .playoff tr:nth-child(even) td:after {
-	content: "";
-	height: 100%;
 	border-bottom: 1px solid #333; border-right: 1px solid #333;
-	position: absolute;
 	top: -50%;
 }
 .rounds td:not(:last-child) .playoff tr:nth-child(odd) td:before, .rounds td:not(:last-child) .playoff tr:nth-child(even) td:after {
@@ -195,6 +173,9 @@ aside .panel, .list-group-item, .table.list-item td, .table.list-item th, .table
 .rounds td.third-place .playoff tr:nth-child(odd) td:before, .rounds td.third-place .playoff tr:nth-child(even) td:after{
 	width: 150%;
 	right: -150%;
+}
+.rounds td.return-matches .playoff tr:nth-child(odd) td:before, .rounds td.return-matches .playoff tr:nth-child(even) td:after {
+	border-right: none;
 }
 .playoff .col-xs-9, .playoff .col-xs-3 {
 	border-top: 1px solid #333;
@@ -206,14 +187,9 @@ aside .panel, .list-group-item, .table.list-item td, .table.list-item th, .table
 	border-left: 1px solid #333;
 	text-align: left;
 }
-.playoff .col-xs-9 p {
+.playoff .col-xs-9 p, .text-nowrap {
 	min-height: 22px;
-	text-overflow: ellipsis;
 	white-space: nowrap;
-	overflow: hidden;
-}
-.playoff .col-xs-9 p:first-child, .playoff .col-xs-3 p:first-child:not(.date) {
-	/*border-bottom: 1px solid #333;*/
 }
 .playoff .col-xs-9 p:first-child {
 	margin: 5px 0 10px;
@@ -234,4 +210,9 @@ aside .panel, .list-group-item, .table.list-item td, .table.list-item th, .table
 .score {
 	margin: 0;
 	padding: 20px 0;
+}
+#ad-telecom .middle-vertical {
+	top: 0;
+	bottom: 0;
+	right: 15px;
 }

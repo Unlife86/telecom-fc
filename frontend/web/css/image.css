@@ -1,4 +1,4 @@
-.img-responsive-landscape, .text-clip {/*Images landscape*/
+.img-responsive-landscape, .text-clip, .block {/*Images landscape*/
 	display: block;
 }
 .item-event {
@@ -8,34 +8,37 @@
 .item-event .wrap-img {
 	max-height: 144px;
 }
-.bg-image-full {
-	clear: both;
-	background-size: cover;
+.bg-image-default {
+	/*background-size: cover;*/
 	background-repeat: no-repeat;
 	background-position: center;
+
+}
+.carousel-sponsors a {
+	padding-top: 10%;
+	background-size: auto 100%;
 }
 /*Images field background*/
 #logo {
 	background-image: url(../img/logo-telecom.png);
-	height: 30px;
+	/*height: 30px;
 	background-size: contain;
-	background-repeat: no-repeat;
+	background-repeat: no-repeat;*/
 }
 #team {
 	background-image: url(../img/team.jpg);	
-	height: 570px;
+	background-size: 100%;
+	/*height: 570px;*/
 }
-#ad-telecom{
+#ad-telecom {
 	background-image: url(../img/bg-banner.jpg);
-	height: 417px;
+	background-size: 100%;
+	/*height: 417px;*/
 }
 .slider, .text-clip {
 	white-space:nowrap;
 }
 /*slider and carousel*/
-.slider *[class*="item-"] {
-	/*float:none;*/
-}
 *[class^="carousel-"] .img-label {
 	bottom: -15px;
 }

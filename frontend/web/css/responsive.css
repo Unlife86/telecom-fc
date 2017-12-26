@@ -21,13 +21,17 @@
     #events-gallery .content {
         height: 399.406px;
     }
+    #matches .subsection {
+        height:100%;
+    }
+    #matches .subsection footer {
+        position: absolute;
+        left: 15px; right: 15px; bottom: 10px;
+    }
 }
 @media all and (max-width: 991px)  {
     .countdown-amount {
         font-size: 2.714em;
-    }
-    #matches .subsection:first-child {
-        background-color: rgba(255,255,255,0.75);
     }
     #events-gallery .content, #matches .subsection:first-child .content {
         height: auto;
@@ -51,9 +55,6 @@
     #matches .content {
         height: 434px;
     }
-    .index-page img {
-        max-height: 63px;
-    }
     td, th {
         font-size: 18px;
     }
@@ -66,6 +67,7 @@
     .header-text p:last-child {
         font-size: 30px;
     }
+
 }
 @media all and (max-width: 991px) and (min-width: 768px) {
     #matches .match, #clock {
@@ -80,7 +82,9 @@
 
 }
 @media all and (max-width: 767px) {
-
+    #matches .subsection {
+        height:auto;
+    }
 
 }
 @media all and (max-width: 767px) and (min-width: 321px) {
