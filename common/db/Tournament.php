@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use Yii;
 
@@ -18,9 +18,11 @@ use Yii;
  * @property integer $current_point
  * @property integer $positon_in_tour
  * @property integer $id
+ * @property integer $id_group
  *
  * @property Seasons $idSeason
  * @property FootballTeam $idTeam
+ * @property RegionGroup $idGroup
  */
 class Tournament extends \yii\db\ActiveRecord
 {
@@ -67,18 +69,19 @@ class Tournament extends \yii\db\ActiveRecord
     }
     public function getIdSeason()
     {
-        return $this->hasOne(Seasons::className(), ['id' => 'id_season']);
+        return $this->hasOne(Seasons::className(), ['id' => 'id_season'])/*->from(Seasons::tableName() . ' s')*/;
     }
     public function getIdTeam()
     {
-        return $this->hasOne(FootballTeam::className(), ['id_team' => 'id_team']);
+        return $this->hasOne(FootballTeam::className(), ['id_team' => 'id_team'])/*->from(FootballTeam::tableName() . ' f')*/;
     }
     public function getIdGroup()
     {
-        return $this->hasOne(RegionGroup::className(), ['id' => 'id_group']);
+        return $this->hasOne(RegionGroup::className(), ['id' => 'id_group'])/*->from(RegionGroup::tableName() . ' g')*/;
     }
     public function getIdLeague()
     {
-        return $this->hasOne(League::className(), ['id' => 'id_league']);
+        return $this->hasOne(League::className(), ['id' => 'id_league'])/*->from(League::tableName() . ' l')*/;
     }
+
 }

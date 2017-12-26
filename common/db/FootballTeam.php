@@ -1,33 +1,16 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use Yii;
 
-/**
- * This is the model class for table "football_team".
- *
- * @property integer $id_team
- * @property string $name_team
- * @property string $alias_team
- *
- * @property Matches[] $matches
- * @property Matches[] $matches0
- * @property Tournament[] $tournaments
- */
 class FootballTeam extends \yii\db\ActiveRecord
 {
-    /**
-     * @inheritdoc
-     */
+    
     public static function tableName()
     {
         return 'football_team';
     }
-
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -36,20 +19,17 @@ class FootballTeam extends \yii\db\ActiveRecord
             [['name_team', 'alias_team', 'city'], 'string', 'max' => 45]
         ];
     }
-
-    /**
-     * @inheritdoc
-     */
     public function attributeLabels()
     {
         return [
             'id_team' => '#',
             'name_team' => 'Наименование',
-            'alias_team' => 'Алиас',
+            'alias_team' => 'Псевдоним',
             'city' => 'Город',
             'id_group' => 'Группа',
         ];
     }
+    
     public function getIdGroup()
     {
         return $this->hasOne(RegionGroup::className(), ['id' => 'id_group']);
@@ -62,4 +42,5 @@ class FootballTeam extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Tournament::className(), ['id_team' => 'id_team']);
     }
+
 }

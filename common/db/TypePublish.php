@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
 use Yii;
 
@@ -39,8 +39,8 @@ class TypePublish extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'type' => 'Type',
+            'id' => '№',
+            'type' => 'Статус',
         ];
     }
 
