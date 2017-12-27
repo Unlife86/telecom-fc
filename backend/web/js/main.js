@@ -12,4 +12,7 @@ $(document).ready(function() {
         $('#tournamentsearch-id_group option:first').attr('selected','selected');
        // alert('hi');
     });
+    if ($('*').is('#news-full_text')) {
+        CKEDITOR.replace( 'news-full_text' );
+    }
 });
