@@ -6,11 +6,11 @@ use yii\widgets\ListView;
 ?>
 <div class="panel panel-default bg-75">
         <div class="panel-heading text-uppercase text-center bg-blue">
-            <h4 class="text-uppercase white-text">Следующая игра</h4>
+            <?= Html::tag('h4', $header, ['class' => 'text-uppercase white-text']) ?>
         </div>
 
     <?= ListView::widget([
-        'dataProvider' => Yii::$app->currentFootballData->getNextMatchProvider(),
+        'dataProvider' => $model,
         'summary'=>'',
         'itemOptions' => ['class'=>'panel-body'],
         'itemView' => function($model) {
@@ -21,17 +21,10 @@ use yii\widgets\ListView;
         },
     ]); ?>
         <?= ListView::widget([
-            'dataProvider' => Yii::$app->currentFootballData->getNextMatchProvider(),
+            'dataProvider' => $model,
             'summary'=>'',
-            //'itemOptions' => ['class'=>'footer-sub', 'tag' => 'footer' ],
             'itemView' => function($model) {
-                if (Yii::$app->formatter->asDate($model->date_match, 'php:H') == '00') {
-                    $address = Html::tag('p',Yii::$app->formatter->asDate($model->date_match, 'php:d F'), ['class' => 'text-center h4']);
-                } else {
-                    $address = Html::tag('p',Yii::$app->formatter->asDate($model->date_match, 'php:d F в H:i'), ['class' => 'text-center h4']);
-                }
-
-
+                $address = Html::tag('p', $model->date_match, ['class' => 'text-center h4']);
                 if ($model->id_stadium != 0) {
                     $stadium = Html::tag('p', 'Стадион «'.$model->idStadium->name.'», г. '.$model->idStadium->city, ['class' => 'text-center reset-margin']);
                     return $address.$stadium;

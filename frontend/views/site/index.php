@@ -1,29 +1,36 @@
 <?php
 use yii\helpers\Html;
 use yii\helpers\Url;
+use frontend\widgets\MatchWidget;
 
 Yii::$app->view->registerJsFile('@web/js/tagcanvas.min.js',['position' => yii\web\View::POS_HEAD]);
 $this->title = 'ФК Телеком';
-$date = Yii::$app->currentFootballData->getNextMatchDate()['date'];
 ?>
-<!--<section class="bg-image-default row hidden-xs" id="team">
-    <h1 class="text-uppercase blue-text bg-75 img-label">один город - одна команда</h1>
-</section>-->
-<!--section matches & tournament-->
-<!--<section class="row">
-    <div class="subsection content-box col-xs-12 bg-white">
-            <div class="col-xs-6 col-sm-2" style="padding: 15px;">
-                <?= Html::img(Yii::getAlias('@web').'/img/vips/fotorazdaev.jpg', ['class'=>'img-responsive']); ?>
-            </div>
-            <div class="col-xs-6 col-sm-10 text-center" style="padding: 15px;">
-                <?= Html::tag('h2', 'Поздравляем с 70-летним юбилеем', ['class' => 'text-uppercase blue-text underline']) ?>
-                <?= Html::tag('p', 'Председателю Правления, '.Html::a( 'Виталию Александровичу Раздаеву', 'https://ru.wikipedia.org/wiki/%D0%A0%D0%B0%D0%B7%D0%B4%D0%B0%D0%B5%D0%B2,_%D0%92%D0%B8%D1%82%D0%B0%D0%BB%D0%B8%D0%B9_%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%D0%BE%D0%B2%D0%B8%D1%87', ['class' => 'h4 text-uppercase bold blue-text']).' 70 лет!', ['class' => 'h4 text-uppercase bold balck-text']) ?>
-                <?= Html::tag('p', 'Желаем Вам светлого счастья в жизни и неугасаемого оптимизма, отменной удачи и бравого здоровья.', ['class' => 'h4 text-uppercase bold balck-text']) ?>
-            </div>
-        </div>
-         
-    
-</section>-->
+<section class="row">
+<?= MatchWidget::widget([
+    'type' => 'nextWillPlay',
+    'filterParams' => [
+        'league_id' => [2,4],
+        'season_id' => 3,
+    ],
+    'styleTag' => [
+        'team-logo' => [
+            'width' => '75%',
+            'background-position' => 'center center',
+            'background-repeat' => 'no-repeat',
+            'background-size' => 'contain',
+        ],
+        'nowrap-text' => [
+            'text-overflow' => 'ellipsis',
+            'white-space' => 'nowrap',
+            'overflow' => 'hidden',
+        ],
+        'footer-sub.bg-white' => [
+            'background-color' => '#ffffff',
+        ],
+    ],
+]) ?>
+</section>
 <section class="row" id="matches">
     <!--tournament short table-->
     <?php

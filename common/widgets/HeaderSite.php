@@ -11,30 +11,9 @@ use yii\bootstrap\Nav;
 
 class HeaderSite extends Widget
 {
-    //private $_currentFootballData;
-    
-    /*public $allowedIPs = ['127.0.0.1', '10.2.2.10', '10.2.2.3', '176.96.65.110'];*/
+    public $menuItems;
 
-    //public $footballsFederations = ['label' => 'Футбольная лига Кузбасса', 'url' => 'http://ligafutbola42.ucoz.ru'];
-
-    //public $specialLink = 'Управление сайтом';
-
-    public $menuItems = [
-        ['label' => 'Главная', 'url' => ['/site/index']],
-        ['label' => 'Клуб', 'url' => ['#'], 'items' => [
-            ['label' => 'Статистика', 'url' => ['/pages/static']],
-            ['label' => 'События', 'url' => ['/team/events']],
-            ['label' => 'Медиа', 'url' => ['/pages/gallery']],
-            ['label' => 'Контакты', 'url' => ['/pages/contacts']],
-        ]],
-        ['label' => 'Первенство Лиги', 'url' => ['/pages/tournament', 'idLeague' => 1, 'tour' => 14, 'season' => 3]],
-        ['label' => 'Кубок Лиги', 'url' => ['/pages/tournament', 'idLeague' => 2, 'tour' => 4, 'season' => 3]],
-        ['label' => 'Весенний кубок', 'url' => ['/pages/tournament', 'idLeague' => 4, 'tour' => 3, 'season' => 3]],
-        ['label' => 'Футбольная лига Кузбасса', 'url' => 'http://ligafutbola42.ucoz.ru'],
-
-    ];
-
-    public $options = [
+    private $options = [
         'linkOptions' => ['class' => 'text-uppercase black-text'],
     ];
 
@@ -91,7 +70,7 @@ class HeaderSite extends Widget
 
     private function _items()
     {
-        return ArrayHelper::merge(
+        /*return ArrayHelper::merge(
             ArrayHelper::merge(
                 ArrayHelper::merge(
                     $this->_createItem($this->menuItems), 
@@ -100,7 +79,9 @@ class HeaderSite extends Widget
                 $this->_createItem($this->footballsFederations)
             ),
             $this->_createItem($this->backendLink, 'http://backend.telecom-fc.ru'.Url::to(['matches/index', 'MatchesSearch' => $this->_currentFootballData]))
-        );
+        );*/
+
+        return array_filter($this->_createItem($this->menuItems));
         
     }
 
