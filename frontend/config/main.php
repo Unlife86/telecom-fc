@@ -33,17 +33,36 @@ return [
         'currentFootballData' => [
             'class' => 'common\components\CurrentFootballData',
         ],
-        'urlManager' => [
-            /*'enablePrettyUrl' => true,
-            'showScriptName' => false,*/
-            'rules' => [
+        'assetManager' => [
+            'bundles' => [
+                'common\assets\AppAsset' => [
+                    'js' => [
+                        'http://code.jquery.com/jquery-migrate-1.2.1.min.js',
+                        'js/slick.min.js',
+                        'js/timer/jquery.plugin.js',
+                        'js/plugins.js',
+                        'js/main.js',
+                    ],
+                    'css' => [
+                        'css/main.css',
+                        'css/slick.css',
+                        'css/slick-theme.css',
+                    ],
+                    'depends' => [
+                        'yii\web\YiiAsset',
+                        'yii\bootstrap\BootstrapAsset',
+                        'sersid\fontawesome\Asset',
+                        'frontend\assets\HeadAsset'
+                    ]
+                ],
             ],
         ],
     ],
     'container' => [
         'definitions' => [
-            'common\widgets\HeaderSite' => [
-                'menuItems' => [
+            'yii\bootstrap\Nav' => [
+                'options' => ['class' => 'navbar-nav navbar-right'],
+                'items' => [
                     ['label' => 'Главная', 'url' => ['/site/index']],
                     ['label' => 'Клуб', 'url' => ['#'], 'items' => [
                         ['label' => 'Статистика', 'url' => ['/pages/static']],
@@ -55,9 +74,29 @@ return [
                     ['label' => 'Кубок Лиги', 'url' => ['/pages/tournament', 'idLeague' => 2, 'tour' => 4, 'season' => 3]],
                     ['label' => 'Весенний кубок', 'url' => ['/pages/tournament', 'idLeague' => 4, 'tour' => 3, 'season' => 3]],
                     ['label' => 'Футбольная лига Кузбасса', 'url' => 'http://ligafutbola42.ucoz.ru'],
-                    in_array(Yii::$app->request->userIP, $params['allowedIPs']) ? ['label' => 'Футбольная лига Кузбасса', 'url' => 'http://ligafutbola42.ucoz.ru'] : null,
-                ]
-            ]
+                ],
+                'dropDownCaret' => '',
+                'activateParents'=> true,
+                'on beforeRun' => function ($event) {
+                    if (in_array(Yii::$app->request->userIP, Yii::$app->params['allowedIPs'])) {
+                        $event->sender->items[] = ['label' => 'Управление сайтом', 'url' => 'http://backend.telecom-fc.ru'];
+                    }
+                    foreach($event->sender->items as $key => $item):
+                        $event->sender->items[$key] = array_merge($item, ['linkOptions' => ['class' => 'text-uppercase black-text']]);
+                    endforeach;
+                },
+            ],
+            'yii\bootstrap\NavBar' => [
+                'screenReaderToggleText' => 'Меню сайта',
+                'innerContainerOptions' => ['class' => 'row bg-white'],
+                'options' => ['class' => 'col-xs-12 general reset-margin'],
+            ],
+            'frontend\controllers\PagesController' => [
+                'layout' => 'main-not-index'
+            ],
+            'frontend\controllers\TeamController' => [
+                'layout' => 'main-not-index'
+            ],
         ],
     ],
     'params' => $params,
