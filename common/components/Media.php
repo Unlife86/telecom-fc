@@ -1,9 +1,11 @@
 <?php
+
 namespace common\components;
 
 use Yii;
 use yii\base\Component;
 use yii\base\DynamicModel;
+use yii\helpers\ArrayHelper;
 
 /**
  * Configure Apache web-server for Windows XAMPP:
@@ -20,17 +22,13 @@ use yii\base\DynamicModel;
 
 class Media extends Component
 {
-
     private $_model;
 
     public $fileStorageInterface;
 
-    public function __construct(FileStorageInterface $fileStorageInterface, $config = [])
-    {
-        parent::__construct($config);
-    }
+    public $options = [];
 
-    public function createModel(/*$attributes = ['imageFile'], $extensions = 'png, jpg, jpeg'*/) 
+    public function createModel() 
     {        
         $this->$_model = new DynamicModel(compact($attributes));
     }
@@ -38,11 +36,22 @@ class Media extends Component
     public function find($dir, $options = []) 
     {
         $_fileStorageInterface = $this->fileStorageInterface;
-        return $_fileStorageInterface::findFiles($dir, $options);
+
+        if (ArrayHelper::isIndexed($dir)) {
+            foreach (array_keys($this->options['directories']) as $dir):
+                $list = ArrayHelper::merge($list, $this->find($dir));
+            endforeach;        
+        } else {
+            $list = $_fileStorageInterface::findFiles(
+                ArrayHelper::getValue($this->options['directories'][$dir], 'path', $dir),
+                ArrayHelper::merge(ArrayHelper::getValue($this->options['directories'][$dir], 'findOptions', $options), $options)
+            );
+        }
+
+        return array_slice($list, 0, ArrayHelper::getValue($options, 'limit', count($list)));
     }
 
     public function upload() {}
-
 }
-?>
 
+?>
