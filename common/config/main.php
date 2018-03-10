@@ -20,6 +20,17 @@ return [
         ],
         'media' => [
             'class' => 'common\components\Media',
+            'fileStorageInterface' => 'common\helpers\FileHelper',
+            'options' => [
+                'directories' => [
+                    'pictures' => [
+                        'path' => '/img',
+                        'findOptions' => [
+                            'only' => ['gallery/*', 'events/*/*']
+                        ]
+                    ],
+                ],
+            ],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
