@@ -7,29 +7,29 @@ Yii::$app->view->registerJsFile('@web/js/tagcanvas.min.js',['position' => yii\we
 $this->title = 'ФК Телеком';
 ?>
 <section class="row">
-<?= MatchWidget::widget([
-    'type' => 'nextWillPlay',
-    'filterParams' => [
-        'league_id' => [2,4],
-        'season_id' => 3,
-    ],
-    'styleTag' => [
-        'team-logo' => [
-            'width' => '75%',
-            'background-position' => 'center center',
-            'background-repeat' => 'no-repeat',
-            'background-size' => 'contain',
+    <?= MatchWidget::widget([
+        'type' => 'nextWillPlay',
+        'filterParams' => [
+            'league_id' => [2,4],
+            'season_id' => 3,
         ],
-        'nowrap-text' => [
-            'text-overflow' => 'ellipsis',
-            'white-space' => 'nowrap',
-            'overflow' => 'hidden',
+        'styleTag' => [
+            'team-logo' => [
+                'width' => '75%',
+                'background-position' => 'center center',
+                'background-repeat' => 'no-repeat',
+                'background-size' => 'contain',
+            ],
+            'nowrap-text' => [
+                'text-overflow' => 'ellipsis',
+                'white-space' => 'nowrap',
+                'overflow' => 'hidden',
+            ],
+            'footer-sub.bg-white' => [
+                'background-color' => '#ffffff',
+            ],
         ],
-        'footer-sub.bg-white' => [
-            'background-color' => '#ffffff',
-        ],
-    ],
-]) ?>
+    ]) ?>
 </section>
 <section class="row" id="matches">
     <!--tournament short table-->
@@ -53,14 +53,9 @@ $this->title = 'ФК Телеком';
             </div>
             <div id="tags">
                 <ul>
-                    <li><a href="#"><img src="img/channels/1.png" alt="game channel"></a></li>
-                    <li><a href="#"><img src="img/channels/2.png" alt="our football channel"></a></li>
-                    <li><a href="#"><img src="img/channels/3.png" alt="match channel"></a></li>
-                    <li><a href="#"><img src="img/channels/4.png" alt="our sport channel"></a></li>
-                    <li><a href="#"><img src="img/channels/5.png" alt="arena channel"></a></li>
-                    <li><a href="#"><img src="img/channels/6.png" alt="football one channel"></a></li>
-                    <li><a href="#"><img src="img/channels/7.png" alt="football two channel"></a></li>
-                    <li><a href="#"><img src="img/channels/8.png" alt="football three channel"></a></li>
+                    <?php for ($i = 1; $i <= 8; $i++) {
+                        echo Html::tag('li', Html::a(Html::img("img/channels/$i.png"), "#"));
+                    } ?>
                 </ul>
             </div>
         </div>

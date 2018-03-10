@@ -85,7 +85,7 @@ class SiteController extends Controller
         $array_return = array_merge($array_return,[
             'team' => $team,
             'events' => $events,
-            'pictures' => Yii::$app->media->find('/img/gallery/'),
+            'pictures' => Yii::$app->media->find('pictures', ['limit' => 8]),
             'params' => array_merge($params,['n_tour' => $n_tour]),
         ]);
         return $this->render('index', $array_return);
