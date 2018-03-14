@@ -22,15 +22,22 @@ use yii\helpers\ArrayHelper;
 
 class Media extends Component
 {
-    private $_model;
+    private $model;
 
     public $fileStorageInterface;
 
     public $options = [];
 
-    public function createModel() 
-    {        
-        $this->$_model = new DynamicModel(compact($attributes));
+    public function setModel() 
+    {
+        $this->model = new DynamicModel(['mediaFiles' => null]/*,[
+            ['mediaFiles'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'maxFiles' => 4
+        ]*/);
+    }
+
+    public function getModel() {
+        if ($this->model === null) { $this->setModel(); }
+        return $this->model;
     }
 
     public function find($dir, $options = []) 
@@ -51,7 +58,14 @@ class Media extends Component
         return array_slice($list, 0, ArrayHelper::getValue($options, 'limit', count($list)));
     }
 
-    public function upload() {}
+    public function upload($dir = null)
+    {
+        if ($this->model->addRule([['mediaFiles'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'maxFiles' => 4])->validate()) {
+            return $_fileStorageInterface::uploadFiles($dir, $this->model->mediaFiles);
+        } else {
+            return false;
+        }
+    }
 }
 
 ?>
