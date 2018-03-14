@@ -15,4 +15,18 @@ $(document).ready(function() {
     if ($('*').is('#news-full_text')) {
         CKEDITOR.replace( 'news-full_text' );
     }
+    /*$('#modalButton').click(function(e) {
+        e.stopPropagation();
+        $('#modalAjax .modal-body').load($(this).attr('value'), function( response, status, xhr ) {
+            if ( status == "success" ) {
+                $('#modalAjax').modal('toggle');
+            }
+        });
+    });*/
+    $('#modalAjax').on('show.bs.modal', function (e) {
+        $(this).find('.modal-body').load($('#modalButton').attr('value'));
+    })
+    $('#modalAjax').on('hidden.bs.modal', function (e) {
+        // do something...
+    })
 });
