@@ -17,6 +17,12 @@ class MediaController extends Controller
 
     public function actionUpload()
     {
+        if (Yii::$app->request->isPost) {
+            if (Yii::$app->media->upload('img/gallery/')) {
+                return $this->redirect(['index']);
+            }
+        }
+        return $this->renderAjax('upload', ['model' => Yii::$app->media->model]);
     }
 
     public function actionDelete($id)

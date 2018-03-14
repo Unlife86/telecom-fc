@@ -1,8 +1,9 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use yii\helpers\Url;
 use backend\assets\CbpGridGalleryAsset;
+use yii\bootstrap\Modal;
 
 CbpGridGalleryAsset::register($this);
 
@@ -11,7 +12,20 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div id="grid-gallery" class="grid-gallery">
 
-    <p><?= Html::a('Загрузить', ['upload'], ['class' => 'btn btn-success']) ?></p>
+    <?php
+        Modal::begin([
+            'id' => 'modalAjax',
+            'header' => false,
+            'toggleButton' => [
+                'id' => 'modalButton',
+                'label' => 'Загрузить',
+                'class'=>'btn btn-success',
+                'value' => Url::to('index.php?r=media%2Fupload')
+            ],
+        ]);
+        echo '<i class="fa fa-spinner fa-spin" style="font-size:36px"></i>';
+        Modal::end()
+    ?>
 
     <section class="grid-wrap">
         <ul class="grid">
